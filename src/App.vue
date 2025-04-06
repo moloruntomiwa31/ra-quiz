@@ -62,7 +62,9 @@
         </div>
 
         <div class="mt-6 flex justify-between">
-          <button @click="prevQuestion" class="rounded px-4 py-2 text-white bg-gray-500">Previous</button>
+          <button @click="prevQuestion" class="rounded px-4 py-2 text-white bg-gray-500">
+            Previous
+          </button>
           <div class="space-x-2">
             <button @click="skipQuestion" class="text-yellow-600">Skip</button>
             <button
@@ -104,16 +106,25 @@ import { Icon } from '@iconify/vue'
 import { raQuestions } from '../data/raQuestions.js'
 import { currentAffairs } from '../data/currentAffairs.js'
 
-const tabs = ['Junior', 'Intermediate', 'RA Curriculum', 'Current Affairs']
-const activeTab = ref('Junior')
-const currentIndex = ref(0)
-const selected = ref(null)
-const isSubmitted = ref(false)
-const toastMessage = ref(null)
-const toastType = ref('success')
+interface Question {
+  question: string
+  options: string[]
+  answer: string
+  explanation: string
+}
+
+const tabs = ['Junior', 'Intermediate', 'RA Curriculum', 'Current Affairs'] as const
+type Tab = (typeof tabs)[number]
+
+const activeTab = ref<Tab>('Junior')
+const currentIndex = ref<number>(0)
+const selected = ref<string | null>(null)
+const isSubmitted = ref<boolean>(false)
+const toastMessage = ref<string | null>(null)
+const toastType = ref<'success' | 'error' | 'info'>('success')
 const optionsChar = ['A', 'B', 'C', 'D']
 
-const currentSet = computed(() => {
+const currentSet = computed<Question[] | undefined>(() => {
   switch (activeTab.value) {
     case 'Junior':
       return raQuestions.junior
@@ -126,13 +137,14 @@ const currentSet = computed(() => {
   }
 })
 
-const currentQuestion = computed(() => currentSet.value?.[currentIndex.value])
+const currentQuestion = computed<Question | undefined>(() => currentSet.value?.[currentIndex.value])
 
-const selectOption = (option) => {
+const selectOption = (option: string) => {
   if (!isSubmitted.value) selected.value = option
 }
 
 const submitAnswer = () => {
+  if (!currentQuestion.value) return
   if (selected.value === currentQuestion.value.answer) {
     toastMessage.value = 'Correct!'
     toastType.value = 'success'
@@ -145,6 +157,7 @@ const submitAnswer = () => {
 }
 
 const nextQuestion = () => {
+  if (!currentSet.value) return
   if (currentIndex.value < currentSet.value.length - 1) {
     currentIndex.value++
     selected.value = null

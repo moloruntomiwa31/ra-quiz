@@ -24,16 +24,13 @@
   </transition>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Icon } from '@iconify/vue'
 
-defineProps({
-  message: String,
-  type: {
-    type: String,
-    default: 'success',
-  },
-})
+defineProps<{
+    message: string
+    type: 'success' | 'error' | 'info'
+}>()
 </script>
 
 <style scoped>
