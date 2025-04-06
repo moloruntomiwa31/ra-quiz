@@ -97,7 +97,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import Toast from './components/Toast.vue'
 import { Icon } from '@iconify/vue'
