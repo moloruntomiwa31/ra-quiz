@@ -125,19 +125,27 @@ const toastType = ref<'success' | 'error' | 'info'>('success')
 const optionsChar = ['A', 'B', 'C', 'D']
 
 const currentSet = computed<Question[]>(() => {
+  const normalizeQuestions = (questions: any[]): Question[] =>
+    questions.map((q) => ({
+      ...q,
+      options: q.options || [],
+    }))
+
   switch (activeTab.value) {
     case 'Junior':
-      return raQuestions.junior
+      return normalizeQuestions(raQuestions.junior)
     case 'Intermediate':
-      return raQuestions.intermediate
+      return normalizeQuestions(raQuestions.intermediate)
     case 'RA Curriculum':
-      return raQuestions.raCurriculum
+      return normalizeQuestions(raQuestions.raCurriculum)
     case 'Current Affairs':
-      return currentAffairs
+      return normalizeQuestions(currentAffairs)
+    default:
+      return []
   }
 })
 
-const currentQuestion = computed<Question | undefined>(() => currentSet.value?.[currentIndex.value])
+const currentQuestion = computed<Question>(() => currentSet.value?.[currentIndex.value])
 
 const selectOption = (option: string) => {
   if (!isSubmitted.value) selected.value = option
@@ -145,7 +153,7 @@ const selectOption = (option: string) => {
 
 const submitAnswer = () => {
   if (!currentQuestion.value) return
-  if (selected.value === currentQuestion.value.answer) {
+  if (selected.value === currentQuestion.value?.answer) {
     toastMessage.value = 'Correct!'
     toastType.value = 'success'
   } else {
