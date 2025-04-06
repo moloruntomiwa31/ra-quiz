@@ -124,7 +124,7 @@ const toastMessage = ref<string | null>(null)
 const toastType = ref<'success' | 'error' | 'info'>('success')
 const optionsChar = ['A', 'B', 'C', 'D']
 
-const currentSet = computed<Question[] | undefined>(() => {
+const currentSet = computed<Question[]>(() => {
   switch (activeTab.value) {
     case 'Junior':
       return raQuestions.junior
