@@ -3,8 +3,8 @@
     <div class="max-w-6xl mx-auto grid gap-20 lg:gap-10">
       <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
         <div class="flex items-center gap-3">
-          <img src="/ra-logo.png" alt="logo" class="w-10 rounded-full" />
-          <h1 class="text-lg md:text-xl font-bold text-white">PA MAKINDE CHAPTER EXAM PREP</h1>
+          <img src="/ra-logo.png" alt="logo" class="w-8 md:w-10 object-cover rounded-full" />
+          <h1 class="text-sm md:text-xl font-bold text-white">PA MAKINDE CHAPTER EXAM PREP</h1>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <button
@@ -25,7 +25,16 @@
 
       <Toast :message="toastMessage" :type="toastType" v-show="toastMessage" />
 
-      <div v-if="currentQuestion" class="bg-white p-6 rounded-xl shadow md:w-xl lg:w-3xl mx-auto">
+      <div
+        v-if="currentQuestion"
+        class="bg-white p-6 rounded-xl shadow w-[95%] md:w-xl lg:w-3xl mx-auto"
+      >
+        <div class="flex justify-end mb-4">
+          <span class="text-lg font-bold text-gray-800"
+            >{{ currentIndex + 1 }}/{{ currentSet.length }}</span
+          >
+        </div>
+
         <p class="text-lg font-semibold mb-4">{{ currentQuestion.question }}</p>
         <div class="grid gap-3">
           <button
@@ -43,7 +52,7 @@
                 : selected === option
                   ? 'bg-blue-100 border-blue-500 text-blue-700'
                   : 'bg-white',
-              'block w-full text-left px-4 py-2 border rounded-lg transition-all duration-300 cursor-pointer hover:bg-blue-50',
+              'text-sm block w-full text-left px-4 py-2 border rounded-lg transition-all duration-300 cursor-pointer hover:bg-blue-50',
             ]"
           >
             <span class="font-bold">{{ optionsChar[idx] + '. ' }} </span>{{ option }}
