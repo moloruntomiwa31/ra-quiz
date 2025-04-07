@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div
-      class="fixed bottom-8 lg:top-10 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 w-[90%] md:w-[60%]"
+      class="fixed bottom-8 lg:top-10 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 w-[90%] md:w-[60%] h-fit"
       :class="{
         'bg-green-100 text-green-800 border border-green-300': type === 'success',
         'bg-red-100 text-red-800 border border-red-300': type === 'error',
